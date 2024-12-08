@@ -106,6 +106,7 @@ def main():
     clear_db()
     create()
     add_questions()
+    add_quiz()
     show_tables()
 
 if __name__ == "__main__":
