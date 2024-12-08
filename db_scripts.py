@@ -90,6 +90,23 @@ def add_quiz():
     conn.commit()
     close()
 
+def add_links():
+    open()
+    cursor.execute('''PRAGMA foreign_keys=on''')
+    query = "INSERT INTO quiz_content (quiz_id, question_id) VALUES (?,?)"
+    cursor.execute(query, [1, 1])
+    cursor.execute(query, [1, 2])
+    cursor.execute(query, [1, 3])
+    conn.commit()
+    answer = input("Додати зв'язок (y / n)?")
+    while answer != 'n':
+        quiz_id = int(input("id вікторини: "))
+        question_id = int(input("id питання: "))
+        cursor.execute(query, [quiz_id, question_id])
+        conn.commit()
+        answer = input("Додати зв'язок (y / n)?")
+    close()
+
 def show(table):
     query = 'SELECT * FROM ' + table
     open()
@@ -107,6 +124,7 @@ def main():
     create()
     add_questions()
     add_quiz()
+    add_links()
     show_tables()
 
 if __name__ == "__main__":
