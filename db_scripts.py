@@ -106,6 +106,23 @@ def add_links():
         conn.commit()
         answer = input("Додати зв'язок (y / n)?")
     close()
+    
+def get_all_questions_for_quiz(quiz_id):
+    """
+    Повертає список всіх питань для конкретної вікторини за її quiz_id
+    """
+    open()  # Відкриваємо підключення до бази даних
+    query = '''
+    SELECT quiz_content.id, question.question, question.answer 
+    FROM quiz_content, question
+    WHERE quiz_content.question_id == question.id 
+    AND quiz_content.quiz_id == ?
+    ORDER BY quiz_content.id
+    '''
+    cursor.execute(query, (quiz_id,))  # Підставляємо quiz_id у запит
+    results = cursor.fetchall()  # Отримуємо всі результати
+    close()  # Закриваємо підключення до бази
+    return results  # Повертаємо список питань
 
 def show(table):
     query = 'SELECT * FROM ' + table
@@ -126,6 +143,8 @@ def main():
     add_quiz()
     add_links()
     show_tables()
+    quiz1 = get_all_questions_for_quiz(1)
+    print(quiz1)
 
 if __name__ == "__main__":
     main()
